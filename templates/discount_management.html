@@ -1,0 +1,63 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <h1>Shop administration</h1>
+    <section>
+
+        <h2>ACTIVE SHOP DISCOUNTS</h2>
+        <table class="product_small_view">
+            <tr>
+                <th scope="col">DISCOUNT CODE</th>
+                <th scope="col">% OFF</th>
+            </tr>
+            {% for discount in all_discount_codes %}
+                <tr>
+                    <td>{{ discount["discount_id"] }}</td>
+                    <td>{{ discount["percentage_off"] }}%</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h2>ADD, EDIT OR REMOVE A DISCOUNT</h2>
+                
+        {% if message %}
+            <p class="feedback">{{ message }}</p>
+        {% endif %}
+
+        <form action="" method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            <table>
+                <tr>
+                    <td>{{ form.discount_id.label }}</td>
+                    <td>{{ form.discount_id(maxlength=9,size=9) }}</td>
+                    <td>
+                        {% for error in form.discount_id.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.percentage_off.label }}</td>
+                    <td>{{ form.percentage_off() }}%</td>
+                    <td>
+                        {% for error in form.percentage_off.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </table>
+            <br />
+        <h3>Options:</h3>
+        <p>*All discount codes must be 9 characters long</p>
+        <br />
+        <p>{{ form.add_submit() }}  Fill out both boxes with the new discount name and it's % off. Click on Add.</p>
+        <br />
+        <p>{{ form.update_submit() }} Fill out both boxes, the discount you want to update and it's new % off. Click on Update.</p>
+        <br />
+        <p>{{ form.delete_submit() }} Only fill out the "Discount code" box with the name of the discount to be removed. Click on Delete.</p>
+        </form>
+    </section>
+
+{% endblock %}
+

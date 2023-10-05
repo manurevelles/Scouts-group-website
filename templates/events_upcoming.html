@@ -1,0 +1,37 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <h1>Upcoming events</h1>
+
+        {% if message %}
+        <p class="feedback">{{ message }} </p>
+        {% endif %}
+        
+        {% if future_events %}
+
+
+                <table class="events">
+                    {% for event in future_events %}
+                        {% if loop.first %}
+                        <tr>
+                            <th>DATE</th>
+                            <th>TIME</th>
+                            <th>EVENT</th>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>{{ event["date"].strftime('%d/%m/%Y') }}</td>
+                            <td>{{ event["time"] }}</td>
+                            <td>{{ event["name"] }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+        {% else %}
+            <p class="feedback">There are no upcoming events for your scout group. Check back in the following days.</p>
+        {% endif %}
+
+
+{% endblock %}
+

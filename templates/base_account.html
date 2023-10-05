@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" id="account_html">
+
+    <head>
+        <meta charset="utf-8" />
+        <title>Big Adventure - {{ title }}</title>
+        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    </head>
+
+    <body>
+    <header id="top">
+        <img src="{{ url_for ('static', filename='Scout_Logo.svg')}}" alt="" />
+        <a href="{{ url_for('index') }}"><h1>Big Adventure Scout Group Cork</h1></a>
+    </header>
+
+    <nav id="main-nav">
+        <ul>
+            <li><a href="{{ url_for('index') }}">home</a></li>
+            <li><a href="{{ url_for('activities') }}">Activities</a></li>
+            <li><a href="{{ url_for('shop') }}">Shop</a></li>
+            {% if g.cart %}<li class="cart-nav"><a href="{{ url_for('cart') }}"><img src="{{ url_for('static', filename='cart_logo_inkscape.svg')}}" alt=""> {{ g.cart }} </a></li>{% endif %}
+            <li><a class="account-link" href="{{ url_for('account') }}"><img src="{{ url_for ('static', filename='sign-in_icon.svg')}}" alt=""> {{ g.user }} </a><a class="logout" href="{{ url_for('logout') }}"> [log out]</a></li>
+        </ul>
+    </nav>
+
+    <main id="account_page">
+        <nav class="account-nav">
+
+            {% if g.user_role == 1 %}       <!-- Regular user -->
+                <ul>
+                    <li>ORDERS
+                        <ul>
+                            <li><a href="{{ url_for('order_history') }}">Order history</a></li>
+                            <li><a href="{{ url_for('user_product_reviews') }}">Product reviews</a></li>
+                            <li><a href="{{ url_for('booked_activities')}}">Booked activities</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>SCOUT GROUP
+                        <ul>
+                            <li><a href="{{ url_for('scout_group_access') }}">Activate Scout Group Code</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>Account settings
+                        <ul>
+                            <li><a href="{{ url_for('account_config') }}">Configuration</a></li>   
+                        </ul>
+                    </li>
+                </ul>
+            {% elif g.user_role == 2 and g.scout_role_id != 4 %}     <!-- Scout member user -->
+                <ul>
+                    <li style="color:yellow">MEMBER: {{ g.scout_group }}'s group
+                        <ul>
+                            <li><a href="{{ url_for('events_upcoming') }}">Upcoming Events</a></li>
+                            <li><a href="{{ url_for('events_past') }}">Past events</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>ORDERS
+                        <ul>
+                            <li><a href="{{ url_for('order_history') }}">Order history</a></li>
+                            <li><a href="{{ url_for('user_product_reviews') }}">Product reviews</a></li>
+                            <li><a href="{{ url_for('booked_activities')}}">Booked activities</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>Account settings
+                        <ul>
+                            <li><a href="{{ url_for('account_config') }}">Configuration</a></li>   
+                        </ul>
+                    </li>
+                </ul>
+            {% elif g.user_role == 2 and g.scout_role_id == 4%}     <!--Scout Leader-->
+                <ul>
+                    <li style="color:yellow">MEMBER: {{ g.scout_group }}'s group
+                        <ul>
+                            <li><a href="{{ url_for('admin_events') }}">All events</a></li>
+                            <li><a href="{{ url_for('add_event') }}">Add an event</a></li>
+                            <li><a href="{{ url_for('leader_access_codes') }}">Member access codes</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>ORDERS
+                        <ul>
+                            <li><a href="{{ url_for('order_history') }}">Order history</a></li>
+                            <li><a href="{{ url_for('user_product_reviews') }}">Product reviews</a></li>
+                            <li><a href="{{ url_for('booked_activities')}}">Booked activities</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>Account settings
+                        <ul>
+                            <li><a href="{{ url_for('account_config') }}">Configuration</a></li>   
+                        </ul>
+                    </li>
+                </ul>
+            {% else %}      <!--ADMIN ONLY-->
+                <ul>
+                    <li>SHOP ADMINISTRATION
+                        <ul>
+                            <li><a href="{{ url_for('add_product') }}">Add product</a></li>
+                            <li><a href="{{ url_for('discount_management') }}">Discount codes</a></li>
+                            <li><a href="{{ url_for('update_remove_product') }}">Other (Edit/remove products, reviews)</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>SHOP STATISTICS
+                        <ul>
+                            <li><a href="{{ url_for('product_sales') }}">Product sales</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>ORDERS
+                        <ul>
+                            <li><a href="{{ url_for('outstanding_orders')}}">Outstanding orders</a></li>
+                            <li><a href="{{ url_for('shipped_orders')}}">Shipped orders</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>ACTIVITIES ADMINISTRATION
+                        <ul>
+                            <li><a href="{{ url_for('admin_activities') }}">Booking status</a></li>
+                            <li><a href="{{ url_for('add_activity') }}">Add activity</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>SCOUT GROUP
+                        <ul>
+                            <li><a href="{{ url_for('admin_events') }}">All events</a></li>
+                            <li><a href="{{ url_for('add_event') }}">Add an event</a></li>
+                            <li><a href="{{ url_for('admin_access_codes') }}">Member access codes</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li>CONTACT FORMS
+                        <ul>
+                            <li><a href="{{ url_for('contact_forms_review') }}">Contact forms</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            {% endif %}
+        </nav>
+
+        <section class="account-content">
+
+            {% block main_content %}
+
+            {% endblock %}
+
+        </section>
+        
+    </main>
+
+    <footer>
+        <a href="{{ url_for('contact') }}">CONTACT US</a>
+        {% block footer_content %}
+        {% endblock %}
+        <p>
+            &copy; Big Adventure Scout Group Cork, 2023
+        </p>
+    </footer>
+
+    </body>
+
+</html>

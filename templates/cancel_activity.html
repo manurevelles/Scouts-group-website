@@ -1,0 +1,34 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <h1>Cancel activity</h1>
+    <p>You are about to cancel the following activity:</p>
+
+    <section class="activity-booking">
+        <p>Activity: <b>{{ activity["name"]}}</b></p>
+        <p>Date: <b>{{ activity["date"] }}</b> </p>
+        <p>Difficulty: <b>{{ activity["difficulty"] }}</b></p>
+        <p>People booked: <b>{{ activity["quantity"] }}</b></p>
+        <p>Price per person: <b>€{{ activity["price"] }}</b> </p>
+        <p>Booking fee (p.p.): <b>€{{ activity["booking_fee"] }}</b></p>
+        {% if activity["price"] != 0 %}
+            <p><b>Already paid: {{ activity["booking_fee"] * activity["quantity"] }} (NOT REFUNDABLE)</b></p>
+        {% else %}
+            <p>FREE activity</p>
+        {% endif %}
+
+        <form action="" method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            {{ form.confirmation() }}
+            {{ form.confirmation.label }}
+            {% for error in form.confirmation.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+            <br />
+            <br />
+            {{ form.submit() }}
+        </form>
+    </section>
+    
+{% endblock %}

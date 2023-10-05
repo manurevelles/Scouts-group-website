@@ -1,0 +1,33 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <h1>Scout member access codes</h1>
+    <p class="feedback"> Note: If a scout is to be promoted to leader, only the Admin has access to that code</p>
+    <p> - Codes are generated daily. </p>
+    <p> - Give only the code of the group the scout belongs to. </p>
+    <p> - Remind the scout or parents to use the code before midnight.</p>
+    <section>
+
+        <table class="access_codes">
+            <tr>
+                <th scope="col">MEMBER GROUP</th>
+                <th scope="col">CODE</th>
+            </tr>
+            {% for code in today_access_codes %}
+                <tr>
+                    <th scope="row">{{ code["name"] }}</td>
+                    <td>{{ code["code"] }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="2"><pre>
+Guide:                        
+Beaver Scouts – Ages 6–8  
+Cub Scouts – Ages 9–11 
+Scouts – Ages 12–15
+Venture Scouts – Ages 16–17</pre></td>
+            </tr>
+        </table>
+    </section>
+{% endblock %}

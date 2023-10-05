@@ -1,0 +1,36 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <h1>Past events</h1>
+
+        {% if message %}
+        <p class="feedback">{{ message }} </p>
+        {% endif %}
+        
+        {% if past_events %}
+
+                <table class="events">
+                    {% for event in past_events %}
+                        {% if loop.first %}
+                        <tr>
+                            <th>DATE</th>
+                            <th>TIME</th>
+                            <th>EVENT</th>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>{{ event["date"].strftime('%d/%m/%Y') }}</td>
+                            <td>{{ event["time"] }}</td>
+                            <td>{{ event["name"] }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+        {% else %}
+            <p class="feedback">No past events found for your Scout Group.</p>
+        {% endif %}
+
+
+{% endblock %}
+

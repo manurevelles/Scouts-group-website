@@ -1,0 +1,147 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <h1>Shop administration</h1>
+    <section>
+
+        <h2>Update a product</h2>
+
+        <p>Update every box that you want to update for this product:</p>
+
+        <table class="product_small_view">
+            <tr>
+                <td rowspan="5"><img src="{{ url_for('static', filename=product['image_path']) }}" alt="" height="200px" /></td>
+                <td>NAME:</td>
+                <td>{{ product["name"] }}</td>
+                <td rowspan="5" colspan="2" class="description">DESCRIPTION: <br /> {{ product["description"]}}</td>
+            </tr>
+            <tr>
+                <td>PRICE:</td>
+                <td>{{ product["price"] }}</td>
+            </tr>
+            <tr>
+                <td>CATEGORY:</td>
+                <td>{{ product["category"] }}</td>
+            </tr>
+            <tr>
+                <td>COLOUR:</td>
+                <td>{{ product["colour"] }}</td>
+            </tr>
+            <tr>
+                <td>STOCK:</td>
+                <td>{{ product["stock"]}}</td>
+            </tr>
+        </table>
+
+        <p>If you want to add a colour or category different than the ones in the database, you can fill out the box beside it. Make sure of not submitting both boxes filled.</p>
+
+        {% if message %}
+            <p class="feedback">{{ message }}</p>
+        {% endif %}
+
+        <form action="" method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            <table class="form-table">
+                <tr>
+                    <td>{{ form.name.label }}</td>
+                    <td>{{ form.name(maxlength=28, size=28) }}</td>
+                    <td>
+                        {% for error in form.name.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.category.label }}</td>
+                    <td>{{ form.category() }}</td>
+                    <td>
+                        {% for error in form.category.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>{{ form.other_category.label }}</td>
+                    <td>{{ form.other_category() }}</td>
+                    <td>
+                        {% for error in form.other_category.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.price.label }}</td>
+                    <td>{{ form.price() }}</td>
+                    <td>
+                        {% for error in form.price.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.colour.label }}</td>
+                    <td>{{ form.colour() }}</td>
+                    <td>
+                        {% for error in form.colour.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>{{ form.other_colour.label }}</td>
+                    <td>{{ form.other_colour() }}</td>
+                    <td>
+                        {% for error in form.other_colour.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.description.label }}</td>
+                    <td>{{ form.description(maxlength=50, size=35) }}</td>
+                    <td>                    
+                        {% for error in form.description.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                <tr>
+                <tr>
+                    <td>{{ form.stock.label }}</td>
+                    <td>{{ form.stock() }}</td>
+                    <td>                    
+                        {% for error in form.stock.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                <tr>
+                    <td></td>
+                    <td>{{ form.submit1() }}</td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+
+    </section>
+    <section  class="update_image_to_product">
+        <h2>Update image</h2>
+        <p>Formats allowed: JPG, PNG, JPEG</p>
+        <p>Max size: 4MB</p>
+        <form action="" method="POST" enctype="multipart/form-data" novalidate>
+            {{ form2.hidden_tag() }}
+            <table class="form-table">
+                <tr>
+                    <td>{{ form2.file.label }}</td>
+                    <td>{{ form2.file() }}</td>
+                    <td>                    
+                        {% for error in form2.file.errors %}
+                            <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                <tr>
+                    <td></td>
+                    <td>{{ form2.submit2() }}</td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+    </section>
+
+{% endblock %}
+

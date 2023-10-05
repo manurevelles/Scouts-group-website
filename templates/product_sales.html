@@ -1,0 +1,92 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <h1>Sales record</h1>
+
+    <p>We keep track of how much a product sales each month! Select a product below and see how many units were sold every month. Current month sales are accessible the following month.</p>
+
+    <form action="" method="POST" novalidate class="form-table">
+        {{ form.hidden_tag() }}
+        {{ form.product_select.label }}
+        {{ form.product_select() }}
+        {% for error in form.product_select.errors %}
+            <span class="error">{{ error }}</span>
+        {% endfor %}
+        <br />
+        {{ form.submit() }}
+    </form>
+
+    {% if product_details %}
+        <table class="product_small_view">
+            <tr>
+                <td rowspan="5"><img src="{{ url_for('static', filename=product_details['image_path']) }}" alt="" height="200px" /></td>
+                <td>NAME:</td>
+                <td>{{ product_details["name"] }}</td>
+                <td rowspan="5" colspan="2" class="description">DESCRIPTION: <br /> {{ product_details["description"]}}</td>
+            </tr>
+            <tr>
+                <td>PRICE:</td>
+                <td>{{ product_details["price"] }}</td>
+            </tr>
+            <tr>
+                <td>CATEGORY:</td>
+                <td>{{ product_details["category"] }}</td>
+            </tr>
+            <tr>
+                <td>COLOUR:</td>
+                <td>{{ product_details["colour"] }}</td>
+            </tr>
+            <tr>
+                <td>STOCK:</td>
+                <td>{{ product_details["stock"]}}</td>
+            </tr>
+        </table>
+
+        {% if product_sales %}
+            <table class="sales">
+                <tr>
+                    <th>MONTH</th>
+                    <th>SALES</th>
+                </tr>
+                {% for item in product_sales %}
+                    <tr>
+                        <td>{{ item["date"].strftime('%B %Y') }}</td>  <!--https://stackoverflow.com/questions/4830535/how-do-i-format-a-date-in-jinja2-->
+                        <td>{{ item["sales"] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p class="feedback">No sales recorded yet for this product.</p>
+        {% endif %}
+
+    {% endif %}
+
+
+
+<!-- 
+        <section>
+
+            {% for month, product_sales in sales_dict.items() %}
+            <h2>{{ month }}</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Sales</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product_id, sales in product_sales.items() %}
+                        <tr>
+                            <td>{{ product_id }}</td>
+                            <td>{{ sales }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endfor %}
+            
+        </section> -->
+
+{% endblock %}

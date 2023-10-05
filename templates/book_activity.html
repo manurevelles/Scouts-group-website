@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+
+    <h1>Activity booking confirmation</h1>
+    <section class="activity-booking">
+        <p>Activity: <b>{{ activity["name"]}}</b></p>
+        <p>Date: <b>{{ activity["date"] }}</b> </p>
+        <p>Difficulty: <b>{{ activity["difficulty"] }}</b></p>
+        <p>Price per person: <b>€{{ activity["price"] }}</b> </p>
+        <p>Booking fee (p.p.): <b>€{{ booking_fee }}</b></p>
+
+        <form action="" method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            <br />
+            {{ form.adults.label }}
+            {{ form.adults() }}
+            <br />
+            {{ form.confirmation() }}
+            {{ form.confirmation.label }}
+            {% for error in form.confirmation.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+            <br />
+            <br />
+            {{ form.submit() }}
+        </form>
+    </section>
+    
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+<section class="outstanding_orders">
+    <h1>Outstanding orders</h1>
+
+        {% if not order_dict %}
+            <p class="feedback">There are no outstanding orders</p>
+        {% else %}
+            <p>Orders pending to be shipped, from oldest to newest.</p>
+        {% endif %}
+        
+        {% if message %}
+        <p class="feedback">{{ message }} </p>
+        {% endif %}
+
+        <!-- loop.first and loop.last  https://tedboy.github.io/jinja2/templ11.html -->
+        {% for order_id in order_id_list %}
+        <section class="past-order">
+            {% for product in order_dict[order_id] %}
+                {% if loop.first %}
+                    <h3>Order #{{ order_id["order_id"] }}  -  Client ID: {{ product["user_id"] }}</h3>
+                    <table>
+                        <tr>
+                            <th colspan="4">Purchase date: {{ product["order_date"].strftime('%d/%m/%Y') }}</th>
+                            <th colspan="2">ID: {{ order_id["order_id"] }}</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Product</th>
+                            <th>Colour</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Product total</th>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <td colspan="2">{{ product["name"] }}</td>
+                        <td>{{ product["colour"] }}</td>
+                        <td>{{ product["price"] }}</td>
+                        <td>x{{ product["product_quantity"] }}</td>
+                        <td>{{ product["product_price_sum"] }}</td>
+                    </tr>
+                    {% if loop.last %}
+                        <tr>
+                            <td colspan="6" class="empty-row"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                            {% if product["discount"] != "None" %}
+                                Discount: {{ product["discount"] }}%</td>
+                            {% endif %}
+                            <td colspan="2">Delivery:
+                            {% if product["shipping_cost"] == 0 %}
+                                FREE</td>
+                            {% else %}
+                                {{ product["shipping_cost"] }}€</td>
+                            {% endif %}
+                            <td colspan="2">Paid: {{ order_dict[order_id][0]["total_price"] }}€</td>
+                        </tr>
+                    </table>
+                    <p class="order-status"><a href="{{ url_for('update_order_status', order_id=order_id['order_id']) }}"> Update order status to "Shipped"</a></p>
+                    {% endif %}
+            {% endfor %}
+        </section>
+        {% endfor %}
+        
+    
+
+    
+
+
+          
+          
+
+</section>
+
+{% endblock %}
+

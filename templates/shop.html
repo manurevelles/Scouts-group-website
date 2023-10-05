@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+
+    <section id="sort_shop">
+        <form action="" method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            {{ form.search.label }}
+            {{ form.search(placeholder="keyword") }}
+            <div class="space"></div>
+            {{ form.category.label }}
+            {{ form.category() }}
+            <div class="space"></div>
+            {{ form.colour.label }}
+            {{ form.colour() }}
+            <div class="space"></div>
+            {{ form.sort.label }}
+            {{ form.sort() }}
+            <div class="space"></div>
+            {{ form.submit() }}
+        </form>
+    </section>
+
+    {% if items %}
+    <section id="shop">
+            {% for item in items %}
+                <section class="items">
+                    <section class="product-display">
+                        <a href="{{ url_for ('product', product_id=item['product_id']) }}"><img src="{{ url_for ('static', filename=item['image_path']) }}" alt="" /></a>
+                        {% if item["stock"] == 0 %}
+                            <p class="product-note">NO STOCK LEFT</p>
+                        {% elif item["stock"] <= 15 %}
+                            <p class="product-note"> Stock running low</p>
+                        {% else %}
+                            <p class="empty-product-note"></p>
+                        {% endif %}
+                            <a href="{{ url_for ('product', product_id=item['product_id']) }}"><h1>{{ item["name"] }}</h1></a>
+                            <p>{{ item["category"] }}</p>
+                            <p>{{ item["price"] }} €</p>
+                            <p>{{ item["colour"] }}</p>
+                            {% if g.user_role == 3 %} 
+                                <br /> <a href="{{ url_for ('update_product_form', product_id=item['product_id']) }}" id="update-product"> UPDATE</a>
+                                <a href="{{ url_for ('remove_product_confirmation', product_id=item['product_id']) }}" id="remove-product"> REMOVE</a> 
+                            {% endif %} 
+
+                        </section>
+                        <section class="product-options">
+                            <a class="details-button" href="{{ url_for ('product', product_id=item['product_id']) }}">See details</a>
+                            {% if item["stock"] != 0 %}
+                                <a class="cart-button" href="{{ url_for ('add_to_cart', product_id=item['product_id']) }}">BUY</a>
+                            {% endif %}
+                    </section>
+                </section>
+            {% endfor %}
+    </section>
+    {% else %}
+    <section class="no-result">
+        <p>No items match your search. </p>
+        <p><a href="{{ url_for('shop') }}">Return</a></p>
+    <pre>
+               (                 ,&&&.   
+                )                .,.&&   
+               (  (              \=__/   
+                   )             ,'-'.   
+             (    (  ,,      _.__|/ /|   
+              ) /\ -((------((_|___/ |   
+            (  // | (`'      ((  `'--|   
+          _ -.;_/ \\--._      \\ \-._/.  
+         (_;-// | \ \-'.\    &lt_,\_\`--'|
+         ( `.__ _  ___,')      &lt_,-'__,'
+          `'(_ )_)(_)_)'                  </pre>    <!--https://stackoverflow.com/questions/1702559/ascii-art-in-html-->
+    </section>
+    {% endif %}
+
+{% endblock %}
+
+{% block footer_content %}
+    <p class="small_text"><a href="https://unsplash.com/es/fotos/8EIyi9Fd0vQ" target="blank">Mug photo by Mel Poole, Unsplash </a> | <a href="https://unsplash.com/es/fotos/axMEtSm42iQ" target="blank">Thermos photo by Oleg Bilyk, Unsplash </a> | <a href="https://unsplash.com/es/fotos/NXt5PrOb_7U" target="blank">Compass photo by Aaron Burden, Unsplash </a></p>
+    <p class="small_text"><a href="https://commons.wikimedia.org/wiki/File:Neckerchief_austrian_scouts_abroad.jpg" target="blank">Neckerchief photo from Wikimedia Commons</a> | <a href="https://unsplash.com/es/fotos/NO7DT-YKmhI" target="blank">Notebook photo by Christian Yanes, Unsplash </a> | <a href="https://unsplash.com/es/fotos/6rXpQzfCYlw" target="blank">Pen photo by Kieran CK, Unsplash </a></p>
+{% endblock %}

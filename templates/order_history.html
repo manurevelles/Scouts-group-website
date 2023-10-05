@@ -1,0 +1,67 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <h1>Order history</h1>
+
+        {% if message %}
+        <p class="feedback">{{ message }} </p>
+        {% endif %}
+        
+        {% if not order_dict %}
+            <p class="feedback">You haven't purchased anything yet.</p>
+        {% else %}
+            <p>If you have any question about your order, contact us through our <a href="{{ url_for('contact') }}">contact form </a> and provide the ID of the order which you are referring to.</p>
+        {% endif %}
+        
+            {% for order_id in order_id_list %}
+            <section class="past-order">
+                {% for product in order_dict[order_id] %}
+                    {% if loop.first %}
+                        <p class="order-status">STATUS: {{ product["shipment_status"] }} {% if product["shipment_status"] == "Shipped" %} on the {{ product["shipment_date"].strftime('%d/%m/%Y') }}{% endif %}</p>
+                        <table>
+                            <tr>
+                                <th colspan="4">Purchase date: {{ product["order_date"].strftime('%d/%m/%Y')  }}</th>
+                                <th colspan="2">#{{ order_id["order_id"] }} (ORDER ID)</th>
+                            </tr>
+                            <tr>
+                                <th colspan="2">Product</th>
+                                <th>Colour</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Product total</th>
+                            </tr>
+                    {% endif %}
+                        <tr>
+                            <td colspan="2">{{ product["name"] }}</td>
+                            <td>{{ product["colour"] }}</td>
+                            <td>{{ product["price"] }}</td>
+                            <td>x{{ product["product_quantity"] }}</td>
+                            <td>{{ product["product_price_sum"] }}</td>
+                        </tr>
+                    {% if loop.last %}
+                            <tr>
+                                <td colspan="6" class="empty-row"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                {% if product["discount"] != "None" %}
+                                    Discount: {{ product["discount"] }}%</td>
+                                {% endif %}
+                                <td colspan="2">Delivery:
+                                {% if product["shipping_cost"] == 0 %}
+                                    FREE</td>
+                                {% else %}
+                                    {{ product["shipping_cost"] }}€</td>
+                                {% endif %}
+                                <td colspan="2">Paid: {{ order_dict[order_id][0]["total_price"] }}€</td>
+                            </tr>
+                        </table>
+                    {% endif %}
+                {% endfor %}
+            </section>
+            {% endfor %}
+
+
+{% endblock %}
+

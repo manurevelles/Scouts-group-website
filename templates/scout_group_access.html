@@ -1,0 +1,21 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <h1>Access to the Scout Group</h1>
+    
+    <p> - Have you been given an access code to enter the Scout Members Area? Enter it below! </p>
+    <p> - The code should be activated the same day it was given. If the code isn't working, get in touch with your scout leader to get a new code. </p>
+    <br />
+    <form action="" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        {{ form.code.label }}
+        {{ form.code(maxlength=12, size=13) }}
+        {% for error in form.code.errors %}
+           <span class="error"> {{ error }}</span>
+        {% endfor %}
+        <br />
+        {{ form.submit() }}
+    </form>
+
+{% endblock %}

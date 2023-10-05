@@ -1,0 +1,63 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <h1>Events administration</h1>
+
+        {% if message %}
+        <p class="feedback">{{ message }} </p>
+        {% endif %}
+        
+        <h2>Upcoming events</h2>
+        {% if future_events %}
+                <table class="events">
+                    {% for event in future_events %}
+                        {% if loop.first %}
+                        <tr>
+                            <th>DATE</th>
+                            <th>TIME</th>
+                            <th>EVENT</th>
+                            <th>SCOUT GROUP</th>
+                            <th></th>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>{{ event["date"].strftime('%d/%m/%Y') }}</td>
+                            <td>{{ event["time"] }}</td>
+                            <td>{{ event["name"] }}</td>
+                            <td>{{ event["scout_group"] }}</td>
+                            <td><a href="{{ url_for('delete_event', details_id=event['details_id']) }}"><img src="{{ url_for ('static', filename='bin_logo_inkscape.png') }}" alt=""  class="remove" /></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+        {% else %}
+            <p class="feedback">There are no upcoming events.</p>
+        {% endif %}
+
+        <h2>Past events</h2>
+        {% if past_events %}
+                <table class="events">
+                    {% for event in future_events %}
+                        {% if loop.first %}
+                        <tr>
+                            <th>DATE</th>
+                            <th>TIME</th>
+                            <th>EVENT</th>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>{{ event["date"] }}</td>
+                            <td>{{ event["time"] }}</td>
+                            <td>{{ event["name"] }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+        {% else %}
+            <p class="feedback">There are no past events.</p>
+        {% endif %}
+
+
+{% endblock %}
+

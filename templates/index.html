@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+
+
+<section id="home">
+
+    <section class="join-us">
+        <section>
+            <h2>JOIN US</h2>
+            <p>With over 70 years of experience, our scout group in Cork City is unmatched. Join us or enroll your child today - we're always looking to expand our group!</p>
+        </section>
+        <section>
+            <a href="{{ url_for('contact', message='Let us know below about who is interested to join (if it isn''t you) and their age. We will get back to you with all the information regarding joining us.')}}"><div class="button">CONTACT US</div></a>
+        </section>
+    </section>
+
+    <section class="activities">
+        <section>
+            <h2>ACTIVITIES</h2>
+            <p>We organise regular outdoor activities. From easier family-friendly hikes to exciting open-sea kayaking. What are you waiting for?</p>
+        </section>
+        <section>
+        <a href="{{ url_for('activities')}}"><div class="button">CHECK ACTIVITIES</div></a>
+        </section>
+    </section>
+
+    <section class="small-shop">
+        <section>
+            <a href="{{ url_for('shop') }}"><div class="button">SEE THIS AND MORE IN OUR <b>SHOP!</b></div></a>
+        </section>
+        {% for item in items %}
+            <section class="product-display">
+                <a href="{{ url_for ('product', product_id=item['product_id']) }}"><img src="{{ url_for ('static', filename=item['image_path']) }}" alt="" /></a>
+            {% if item["stock"] <= 15 %}
+                <p class="product-note"> Stock running low</p>
+            {% else %}
+                <p class="empty-product-note"></p>
+            {% endif %}
+                <a href="{{ url_for ('product', product_id=item['product_id']) }}"><h1>{{ item["name"] }}</h1></a>
+                <p>{{ item["category"] }}</p>
+                <p>{{ item["price"] }} €</p>
+                <p>{{ item["colour"] }}</p>
+            </section>
+        {% endfor %}
+    </section>
+
+</section>
+    
+{% endblock %}
+
+{% block footer_content %}
+    <p class="small_text"><a href="https://unsplash.com/es/fotos/7rImz-goqfQ" target="blank">Photo (I) by Mael BALLAND, Unsplash </a> | <a href="https://unsplash.com/es/fotos/UmV2wr-Vbq8" target="blank">Photo (II) by Felix Rosting, Unsplash </a></p>
+{% endblock %}

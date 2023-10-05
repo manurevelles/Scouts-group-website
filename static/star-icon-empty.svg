@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="2.8207855mm"
+   height="2.6888542mm"
+   viewBox="0 0 2.8207855 2.6888542"
+   version="1.1"
+   id="svg5"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="6.7277216"
+     inkscape:cx="118.39075"
+     inkscape:cy="97.284049"
+     inkscape:window-width="1440"
+     inkscape:window-height="878"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-22.69167,-21.616037)">
+    <path
+       sodipodi:type="star"
+       style="fill:#fff6d5;fill-opacity:1;stroke:#e9a600;stroke-width:2.65294;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       id="path844"
+       inkscape:flatsided="false"
+       sodipodi:sides="5"
+       sodipodi:cx="42.788136"
+       sodipodi:cy="45.305088"
+       sodipodi:r1="21.030085"
+       sodipodi:r2="9.2532377"
+       sodipodi:arg1="0.89138252"
+       sodipodi:arg2="1.5197011"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 56.002118,61.665257 43.260726,54.54625 31.312036,62.927902 34.145307,48.610224 22.481533,39.836418 36.973983,38.106613 41.714065,24.302449 47.83762,37.55105 62.430926,37.793414 51.723041,47.711304 Z"
+       inkscape:transform-center-x="-0.0034118243"
+       inkscape:transform-center-y="-0.11344156"
+       transform="matrix(0.0602085,0.0035036,-0.0035036,0.0602085,21.681364,20.221348)"
+       inkscape:export-filename="star-icon-empty.svg"
+       inkscape:export-xdpi="197.94505"
+       inkscape:export-ydpi="197.94505" />
+  </g>
+</svg>

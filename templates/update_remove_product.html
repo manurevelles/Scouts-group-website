@@ -1,0 +1,26 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+<h1>Shop administration</h1>
+    {% if message %}
+    <p class="feedback">{{ message }} </p>
+    {% endif %}
+
+    <section>
+        <h3>- Update products</h3>
+        <p>Next to each product in the shop you will find an <span id="update-product">UPDATE</span> button to update the desired product from the shop.</p>
+    </section>
+        <br />
+        <br />
+    <section>
+        <h3>- Remove products</h3>
+        <p>Next to each product in the shop you will find a <span id="remove-product">REMOVE</span> button to remove a product from the shop. This is a soft delete; a history table is kept in the database.  </p>
+    </section>
+        <br />
+        <br />
+    <section>
+        <h3>- Delete reviews</h3>
+        <p>You can review and delete reviews directly from each product page. </p>
+    </section>
+
+{% endblock %}

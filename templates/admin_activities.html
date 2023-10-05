@@ -1,0 +1,112 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <section>
+        <h1>Activities administration</h1>
+
+        <h2>Upcoming activities + booking status</h2>
+
+        <p>All future activities listed below.</p>
+        <p>In case of deleting, consider any bookings in the activity. The search button to filter not booked activities yet is handy when considering what activity could potentially be cancelled.</p>
+
+        <form action="" method="POST" novalidate class="admin-sort-activities">
+            {{ form.hidden_tag() }}
+            {{ form.from_date.label }}
+            {{ form.from_date() }}
+            <div class="space"></div>
+            {% for error in form.from_date.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+            <div class="space"></div>
+            {{ form.to_date.label }}
+            {{ form.to_date() }}
+            <div class="space"></div>
+            {% for error in form.to_date.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+            <br />
+            <br />
+            {{ form.category.label }}
+            {{ form.category() }}
+            <br />
+            <br />
+            {{ form.booking() }}
+            {{ form.booking.label }}
+            <div class="space"></div>
+            {{ form.submit() }}
+        </form>
+    </section>
+
+    {% if message %}
+        <p class="feedback">{{ message }}</p>
+    {% endif %}
+
+    {% if activities %}
+    <section id="admin_activities">
+            {% for activity in activities %}
+                <section class="admin_activity_display">
+                    <table>
+                        <caption>ACTIVITY</caption>
+                        <tr>
+                            <th>ACTIVITY</td>
+                            <th>DATE</td>
+                            <th>LEVEL</td>
+                            <th>PLACES AVAILABLE</td>
+                            <th>PRICE</td>
+                            <th>REMOVE</td>
+                        </tr>
+                        <tr>
+                            <td>{{ activity["name"] }}</td>
+                            <td>{{ activity["date"] }}</td>
+                            <td>{{ activity["difficulty"] }}</td>
+                            <td>{{ activity["capacity"] }}</td>
+                            <td>
+                                {% if activity["price"] == 0 %}
+                                    FREE
+                                {% else %}
+                                    {{ activity["price"] }} €
+                                {% endif %}
+                            <td><div><a href="{{ url_for('delete_activity', activity_id=activity['activity_id']) }}"><img src="{{ url_for ('static', filename='bin_logo_inkscape.png') }}" alt=""  class="remove" /></a></div></td>
+                        </tr>
+                    </table>
+                {% if activities_dict[activity["activity_id"]] %}
+                    {% for booking in activities_dict[activity["activity_id"]] %}
+                        {% if loop.first %}
+                            <table class="booking">
+                                <caption>Bookings</caption>
+                                <tr>
+                                    <th>Booking ID</td>
+                                    <th>User ID</td>
+                                    <th>Quantity</td>
+                                    <th>Booking fee</th>
+                                    <th>Paid</td>
+                                    <th>Booking date</td>
+                                </tr>
+                        {% endif %}
+                                <tr>
+                                    <td>{{ booking["booking_id"] }}</td>
+                                    <td>{{ booking["user_id"] }}</td>
+                                    <td>x{{ booking["quantity"] }}</td>
+                                    <td>{{ booking["booking_fee"] }}</td>
+                                    <td>{{ booking["booking_fee"] * booking["quantity"] }} €</td>
+                                    <td>{{ booking["booking_date"] }}</td>
+                    {% endfor %}
+                    </table>
+                {% else %}
+                    <p>No bookings yet.</p>
+                {% endif %}
+            </section>
+            {% endfor %}
+    </section>
+    {% else %}
+        <p class="feedback">No activities found.</p>
+    {% endif %}
+
+{% endblock %}
+
+
+
+{% block footer_content %}
+    <p class="small_text">Photo by<a href="https://unsplash.com/es/fotos/N-aTikX-b00"> Ales Krivec, Unsplash </a></p>
+{% endblock %}

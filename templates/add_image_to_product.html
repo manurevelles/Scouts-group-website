@@ -1,0 +1,39 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <h1>Shop administration</h1>
+    <h2>Add an image (optional)</h2>
+    <section class="add_image_to_product">
+        <img src="{{ url_for('static', filename='no_image_available.png') }}" alt="" />
+        <p class="feedback">
+            The database has been updated with the new product and displaying the default "no image available" image. <br /> Do you want to update it with an image of the product?
+            <br /> <span class="small_text">You can always add it later in "Update product" in shop management (accessible through the navigation bar)</span>
+        </p>
+
+        <p>Formats allowed: JPG, PNG, JPEG</p>
+        <p>Max size: 4MB</p>
+        <form action="" method="POST" enctype="multipart/form-data" novalidate>
+            {{ form.hidden_tag() }}
+            <table class="form-table">
+                <tr>
+                    <td>{{ form.file.label }}</td>
+                    <td>{{ form.file() }}</td>
+                    <td>                    
+                        {% for error in form.file.errors %}
+                            <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{{ form.submit() }}</td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+        <br />
+        <p><a href="{{ url_for('add_product') }}">RETURN</a></p>
+    </section>
+
+{% endblock %}

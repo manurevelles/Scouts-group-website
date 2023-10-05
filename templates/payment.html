@@ -1,0 +1,11 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+<h1>Payment result</h1>
+
+    {% if message %}
+        <p class="feedback">{{ message }} </p>
+    {% endif %}
+
+{% endblock %}
+

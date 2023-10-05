@@ -1,0 +1,16 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+<section class="welcome">
+    <h1>Welcome to the group, <br/> {{ g.user }} ! </h1>
+
+    <p>You are now part of the <b>{{ scout_role }}'s</b>  group!</p>
+    <p>To your left, you can check future and past events for your group.</p>
+    <p>There is also a news feed with updates from the Scout Leaders.</p>
+
+</section>
+{% endblock %}
+
+{% block footer_content %}
+    <p class="small_text">Photo by<a href="https://unsplash.com/es/fotos/lbmrrNgq2lo"> Chris Nguyen, Unsplash </a></p>
+{% endblock %}

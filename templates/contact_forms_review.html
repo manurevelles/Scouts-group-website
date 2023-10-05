@@ -1,0 +1,54 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+    <section>
+        <h1>Received contact forms</h1>
+        <p>Ordered by most recent.</p>
+        <p> ATTENTION: Deleted forms cannot be recovered.</p>
+
+        {% if message %}
+            <p class="feedback">{{ message }}</p>
+        {% endif %}
+
+        {% if contact_forms %}
+            {% for form in contact_forms %}
+
+                <h2>FORM ID: {{ form["contact_id" ]}}</h2>
+
+                <table class="submitted-contact-form">
+                    <tr>
+                        <th scope="row">Date:</th>
+                        <td>{{ form["date"] }}</td>
+                        <th scope="row">Email:</th>
+                        <td>{{ form["email"] }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Name:</th>
+                        <td>{{ form["name"] }}</td>
+                        <th scope="row">Phone:</th>
+                        <td>{{ form["phone"] }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Subject:</th>
+                        <td>{{ form["subject"] }}</td>
+                        <th scope="row">Contact preference:</th>
+                        <td>{{ form["preference"] }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">{{ form["message"] }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><a href="{{ url_for('remove_contact_form', contact_id=form['contact_id']) }}">[DELETE FORM PERMANENTLY]</a></td>
+                    </tr>
+                </table>
+            
+            {% endfor %}
+
+        {% else %}
+                <p class="feedback">NIL NEW CONTACT FORMS</p>
+        {% endif %}
+
+    </section>
+
+{% endblock %}
+

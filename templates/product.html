@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+
+{% if product %}
+    <section id="product">
+
+            <img src="{{ url_for ('static', filename=product['image_path']) }}" alt="" class="product-image" />
+            
+            <table>
+                <tr>
+                    <td><h1>{{ product["name"] }}</h1></td>
+                </tr>
+                {% if mean_rating %}
+                    <tr >
+                        <td class="review-rating">
+                            {% for number in range( mean_rating) %}
+                                <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                            {% endfor %}
+                            {% if flag_half_star != True %}
+                                <img src="{{ url_for('static', filename='star-icon-half.svg') }}" alt="">
+                                {% for number in range( 4-mean_rating ) %}
+                                    <img src="{{ url_for('static', filename='star-icon-empty.svg') }}" alt="">
+                                {% endfor %}
+                            {% else %}
+                                {% for number in range( 5-mean_rating ) %}
+                                    <img src="{{ url_for('static', filename='star-icon-empty.svg') }}" alt="">
+                                {% endfor %}
+                            {% endif %}
+                {% else %}
+                    <tr>
+                        <td class="review-rating">
+                            {% for number in range(5) %}
+                                <img src="{{ url_for('static', filename='star-icon-empty.svg') }}" alt="">
+                            {% endfor %}
+                {% endif %}
+                            <a href="#reviews">({{ total_reviews }})</a>
+                        </td>
+                    </tr>
+                <tr>
+                    <td>Colour: {{ product["colour"] }}</td>
+                </tr>
+                <tr>
+                    <td>Price: {{ product["price"] }}€</td>
+                </tr>
+                {% if g.user_role == 3 %} 
+                <tr>
+                    <td><br/> <a href="{{ url_for ('update_product_form', product_id=product['product_id']) }}" id="update-product"> UPDATE</a>
+                        <a href="{{ url_for ('remove_product_confirmation', product_id=product['product_id']) }}" id="remove-product"> REMOVE </a></td>
+                </tr>
+                {% endif %}
+                {% if message %}
+                <tr>
+                    <td><br><span class="product-note"> {{ message}} </span></td>
+                </tr>
+                {% endif %}
+                {% if message_stock %}
+                    <td><p class="feedback-product"> {{ message_stock }}</p></td>
+                {% endif %}
+                <tr>
+                    <td class="description">{{ product["description"] }}</td>
+                </tr>
+                {% if available_stock != 0%}
+                <tr>
+                    <td class="product-options"><a class="cart-button" href="{{ url_for ('add_to_cart', product_id=product['product_id']) }}">ADD TO CART</a></td>
+                </tr>
+                {% endif %}
+            </table>
+
+    </section>
+
+    <section class="small-shop-product">
+        <section>
+            <div class="button">YOU MAY ALSO BE INTERESTED IN...</div>
+        </section>
+        {% for item in items %}
+            <section class="product-display">
+                <a href="{{ url_for ('product', product_id=item['product_id']) }}"><img src="{{ url_for ('static', filename=item['image_path']) }}" alt="" /></a>
+            {% if item["stock"] <= 15 %}
+                <p class="product-note"> Stock running low</p>
+            {% else %}
+                <p class="empty-product-note"></p>
+            {% endif %}
+                <a href="{{ url_for ('product', product_id=item['product_id']) }}"><h1>{{ item["name"] }}</h1></a>
+                <p>{{ item["category"] }}</p>
+                <p>{{ item["price"] }} €</p>
+                <p>{{ item["colour"] }}</p>
+            </section>
+        {% endfor %}
+    </section>
+
+    <h1 id="reviews">Reviews</h1>
+
+    {% if product_reviews %}
+        {% for review in product_reviews %}
+        <section id="product_review">
+            <p class="user"><img src="{{ url_for('static', filename='profile_icon.svg') }}" alt=""> {{ review["user_id" ]}}</p>
+            <h3>
+            <span>
+                {% for number in range( review["rating"] ) %}
+                    <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                {% endfor %}
+                {% for number in range( 5-review["rating"] ) %}
+                    <img src="{{ url_for('static', filename='star-icon-empty.svg') }}" alt="">
+                {% endfor %}
+            </span> {{ review["review_title"]}}</h3>
+            <p class="small_text">Reviewed on {{ review["date"].strftime('%d %B %Y') }}</p>
+            <p class="review">{{ review["review"] }}</p>
+            {% if g.user_role == 3 %}
+                <p class="order-status"><a href="{{ url_for('admin_delete_review', review_id=review['review_id'], product_id=product['product_id']) }}"> Delete review</a></p>
+            {% endif %}
+        </section>
+        {% endfor %}
+
+    {% else %}
+    <p>No customer reviews</p>
+
+    {% endif %}
+
+{% else %}
+        <p class="feedback">
+            {{ message }}
+        </p>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <section>
+
+        <h1>Shop administration</h1>
+
+        <h2>Product removal</h2>
+        <table class="product_small_view">
+            <tr>
+                <td rowspan="5"><img src="{{ url_for('static', filename=product['image_path']) }}" alt="" height="200px" /></td>
+                <td>NAME:</td>
+                <td>{{ product["name"] }}</td>
+                <td rowspan="5" colspan="2" class="description">DESCRIPTION: <br /> {{ product["description"]}}</td>
+            </tr>
+            <tr>
+                <td>PRICE:</td>
+                <td>{{ product["price"] }}</td>
+            </tr>
+            <tr>
+                <td>CATEGORY:</td>
+                <td>{{ product["category"] }}</td>
+            </tr>
+            <tr>
+                <td>COLOUR:</td>
+                <td>{{ product["colour"] }}</td>
+            </tr>
+            <tr>
+                <td>STOCK:</td>
+                <td>{{ product["stock"]}}</td>
+            </tr>
+        </table>
+        <form action="" method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            {% if product["image_path"] != "" %}
+            {{ form.image_removal() }}
+            {{ form.image_removal.label }}
+            {% endif %}
+            <br />
+            <br />
+            {{ form.confirmation() }}
+            {{ form.confirmation.label }}
+            {% for error in form.confirmation.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+            <br />
+            {{ form.submit() }}
+        </form>
+
+    </section>
+
+{% endblock %}
+

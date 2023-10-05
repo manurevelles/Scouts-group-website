@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+
+<section id="cart">
+    
+    {% if not free_delivery %}
+        <p class="note">Get FREE delivery in orders over 30€</p>
+    {% endif %}
+
+    <h1>Your cart</h1>
+
+    {% if message %}
+        <p class="feedback">{{ message }}</p>
+    {% endif %}
+    
+    {% if cart %}
+
+        <form action="" method="POST" class="discount-code" novalidate>
+            {{ form.hidden_tag() }}
+            {{ form.discount.label }}
+            {{ form.discount(maxlength=9,size=9) }}
+            {{ form.submit() }}
+            <br />
+            {% for error in form.discount.errors %}
+            <span class="error">{{ error }}</span>
+            {% endfor %}
+        </form>
+        
+        <table>
+            <tr>
+                <td></td>
+                <th scope="col">Product</th>
+                <th scope="col">Colour</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+            </tr>
+        {% for product_id, value in products.items() %}
+            <tr class="cart-item">
+                <td>
+                    <a href="{{ url_for ('product', product_id=value['product_id']) }}"><img src="{{ url_for ('static', filename=value['image_path']) }}" alt="" /></a>
+                </td>
+                <td>
+                    <a href="{{ url_for ('product', product_id=value['product_id']) }}">{{ value["name"] }}</a>
+                </td>
+                <td>
+                    {{ value["colour"] }}
+                </td>
+                <td>
+                    {{ value["price"] }} €
+                </td>
+                <td class="quantity">
+                    <div class="quantity-modifier"><a href="{{ url_for ('decrease_product', product_id=value['product_id']) }}">&#8722</a> {{ cart[product_id] }} <a href="{{ url_for ('increase_product', product_id=value['product_id']) }}">+</a></div>
+                    <div><a href="{{ url_for('remove_from_cart', product_id=value['product_id']) }}"><img src="{{ url_for ('static', filename='bin_logo_inkscape.png') }}" alt=""  class="remove" /></a></div>
+                </td>
+                <td>{{ "%.2f"|format(value["price"] * cart[product_id]) }}</td>
+            </tr>
+        {% endfor %}
+
+        {% if cart_prices["discounted_price"] %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="crossed"> {{ cart_prices["price_sum"] }} €</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="discount">
+                        PROMO (-{{ discount }}%)
+                        <p><a href="{{ url_for('remove_discount') }}">[Remove code]</a></p>
+                    </td>
+                    <td> {{ cart_prices["discounted_price"] }} €</td>
+                </tr>
+                {% if not free_delivery %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="shipping">shipping:</td>
+                            <td> {{ cart_prices["shipping_cost"] }} €</td>
+                        </tr>
+                {% else %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="shipping">Free delivery</td>
+                            <td>0 €</td>
+                        </tr>
+                {% endif %}
+        {% elif not free_delivery  %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td> {{ cart_prices["price_sum"] }} €</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="shipping">shipping:</td>
+                    <td>{{ cart_prices["shipping_cost"] }} €</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td> {{ cart_prices["price_sum"] }} €</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="shipping">Free delivery</td>
+                    <td>0 €</td>
+                </tr>
+        {% endif %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>TOTAL</td>
+                <td class="final_price">{{ cart_prices["final_price"] }} €</td>
+            </tr>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td colspan="2"><a href="{{ url_for ('payment') }}">PROCEED TO PAYMENT</a></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+
+    {% else %}
+        <br />
+        <p class="">Your cart is empty!</p>
+    {% endif %}
+
+</section>
+
+{% endblock %} 

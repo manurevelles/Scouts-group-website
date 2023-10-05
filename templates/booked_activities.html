@@ -1,0 +1,61 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <h1>Booked activities</h1>
+
+    {% if message %}
+        <p class="feedback">&#10004; {{ message }}</p>
+    {% endif %}
+
+    <h2>Upcoming activities</h2>
+    {% if booked_activities %}
+    <p>
+        We understand that plans can change unexpectedly. If you are unable to attend a booked activity, we kindly ask that you let us know at least one week in advance. If you do so, we can change your booking to a future activity date and transfer the charged booking fee. You can get in touch with us via our <a href="{{ url_for('contact') }}">contact form</a>.
+    </p>
+    <p>
+        If it's already too late to make changes and you won't be able to attend, we would greatly appreciate it if you could please cancel your booking. This way, someone else can take your place and enjoy the activity. Note that as per our Terms and Conditions, your booking fee is non-refundable. Thank you for your understanding!
+    </p>
+        {% for activity in booked_activities %}
+            <section class="booked-activities">
+                <p>Date: <b>{{ activity["date"] }}</b></p>
+                <p>Activity: <b>{{ activity["name"]}}</b></p>
+                <p>Difficulty: <b>{{ activity["difficulty"] }}</b></p>
+                <p>People booked: <b>{{ activity["quantity"] }}</b></p>
+                <p>Price (p.p.): <b>€{{ activity["price"] }}</b></p>
+                <p>Booking fee (p.p.): <b>€{{ activity["booking_fee"] }}</b></p>
+                <br />
+                {% if activity["price"] != 0 %}
+                    <p>Paid: <b>{{ activity["booking_fee"] * activity["quantity"] }}</b></p>
+                    <p><b>A total of €{{ "%.2f"|format((activity["price"] - activity["booking_fee"]) * activity["quantity"]) }} remains to be paid.</b></p>
+                {% else %}
+                    <p>FREE activity</p>
+                {% endif %}
+                <br />
+                <p class="order-status"><a href="{{ url_for('cancel_activity', booking_id=activity['booking_id']) }}">Cancel the activity</a></p>
+            </section>
+        {% endfor %}
+    {% else %}
+        <p class="feedback">
+            No upcoming activities booked yet.
+        </p>
+    {% endif %}
+    <h2>Past activities</h2>
+    {% if past_activities %}
+        {% for activity in past_activity %}
+            <section class="booked-activities">
+                <p>Date: <b>{{ activity["date"] }}</b></p>
+                <p>Activity: <b>{{ activity["name"]}}</b></p>
+                <p>Difficulty: <b>{{ activity["difficulty"] }}</b></p>
+                <p>People booked: <b>{{ activity["quantity"] }}</b></p>
+                <p>Price (p.p.): <b>€{{ activity["price"] }}</b></p>
+                <p>Booking fee (p.p.): <b>€{{ activity["booking_fee"] }}</b></p>
+            </section>
+        {% endfor %}
+    {% else %}
+        <p class="feedback">
+            No past activities found.
+        </p>
+    {% endif %}
+    
+{% endblock %}

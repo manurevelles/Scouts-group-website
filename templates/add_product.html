@@ -1,0 +1,97 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <h1>Shop administration</h1>
+
+    <section>
+        <h2>Add a product</h2>
+        
+        <p>Fill out the form with all the information of the product you want to add to the database.</p>
+        <p>If the colour or category doesn't appear in the select options, you can fill out the box beside it with the new value.</p>
+
+        {% if message %}
+            <p class="feedback">{{ message }}</p>
+        {% endif %}
+
+        <form action="" method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            <table class="form-table">
+                <tr>
+                    <td>{{ form.name.label }}</td>
+                    <td>{{ form.name(maxlength=28, size=28) }}</td>
+                    <td>
+                        {% for error in form.name.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.category.label }}</td>
+                    <td>{{ form.category() }}</td>
+                    <td>
+                        {% for error in form.category.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>{{ form.other_category.label }}</td>
+                    <td>{{ form.other_category() }}</td>
+                    <td>
+                        {% for error in form.other_category.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.price.label }}</td>
+                    <td>{{ form.price() }}</td>
+                    <td>
+                        {% for error in form.price.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.colour.label }}</td>
+                    <td>{{ form.colour() }}</td>
+                    <td>
+                        {% for error in form.colour.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>{{ form.other_colour.label }}</td>
+                    <td>{{ form.other_colour() }}</td>
+                    <td>
+                        {% for error in form.other_colour.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.description.label }}</td>
+                    <td>{{ form.description(maxlength=50, size=35) }}</td>
+                    <td>                    
+                        {% for error in form.description.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.stock.label }}</td>
+                    <td>{{ form.stock() }}</td>
+                    <td>                    
+                        {% for error in form.stock.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                <tr>
+                    <td></td>
+                    <td>{{ form.submit() }}</td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+    </section>
+
+{% endblock %}
+

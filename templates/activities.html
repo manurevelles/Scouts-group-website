@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+
+    <section id="sort_activities">
+        <h1>Book activities</h1>
+        <form action="" method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            {{ form.from_date.label }}
+            {{ form.from_date() }}
+            <br />
+            {% for error in form.from_date.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+            <br />
+            {{ form.to_date.label }}
+            {{ form.to_date() }}
+            <br />
+            {% for error in form.to_date.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+            <br />
+            {{ form.category.label }}
+            {{ form.category() }}
+            <br />
+            <br />
+            {{ form.adults.label }}
+            {{ form.adults() }}
+            <br />
+            {{ form.submit() }}
+        </form>
+    </section>
+
+    {% if activities %}
+    <p class="feedback">
+        You must pay 30% of the total price upfront to secure your booking. The remaining cost can be paid on the day of the activity. 
+        If you cancel or cannot attend the activity, the booking fee will not be refunded.
+    </p>
+    <section id="activities">
+            {% for activity in activities %}
+                    {% if loop.first %}
+                    <table class="activity-display-header">
+                        <tr>
+                            <th>ACTIVITY</td>
+                            <th>DATE</td>
+                            <th>LEVEL</td>
+                            <th>PLACES AVAILABLE</td>
+                            <th>PRICE</td>
+                            <th>BOOK</td>
+                        </tr>
+                    </table>
+                    {% endif %}
+                    <table class="activity-display">
+                    <tr>
+                        <td>{{ activity["name"] }}</td>
+                        <td>{{ activity["date"] }}</td>
+                        <td>{{ activity["difficulty"] }}</td>
+                        <td>{{ activity["capacity"] }}</td>
+                        <td>
+                            {% if activity["price"] == 0 %}
+                                FREE
+                            {% else %}
+                                {{ activity["price"] }} €
+                            {% endif %}
+                        <td class="cart-button"><a href="{{ url_for('book_activity', activity_id=activity['activity_id']) }}"> BOOK</a></td>
+                    </tr>
+                </table>
+            {% endfor %}
+    </section>
+    {% else %}
+    <section class="no-result">
+        <p>No activities found for that search </p>
+    <pre>
+               (                 ,&&&.   
+                )                .,.&&   
+               (  (              \=__/   
+                   )             ,'-'.   
+             (    (  ,,      _.__|/ /|   
+              ) /\ -((------((_|___/ |   
+            (  // | (`'      ((  `'--|   
+          _ -.;_/ \\--._      \\ \-._/.  
+         (_;-// | \ \-'.\    &lt_,\_\`--'|
+         ( `.__ _  ___,')      &lt_,-'__,'
+          `'(_ )_)(_)_)'                  </pre>    <!--https://stackoverflow.com/questions/1702559/ascii-art-in-html-->
+    </section>
+    {% endif %}
+
+{% endblock %}
+
+
+
+{% block footer_content %}
+    <p class="small_text">Photo by<a href="https://unsplash.com/es/fotos/N-aTikX-b00"> Ales Krivec, Unsplash </a></p>
+{% endblock %}

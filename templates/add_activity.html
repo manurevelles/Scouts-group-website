@@ -1,0 +1,83 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+
+    <h1>Activities administration</h1>
+
+    <section>
+        <h2>Add an activity</h2>
+
+        {% if message %}
+            <p class="feedback">{{ message }}</p>
+        {% endif %}
+        
+        <p>Fill out the form with the information of the new activity.</p>
+
+        <form action="" method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            <table class="form-table">
+                <tr>
+                    <td>{{ form.name.label }}</td>
+                    <td colspan="3">{{ form.name(size=35) }}
+                        {% for error in form.name.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.date.label }}</td>
+                    <td>{{ form.date() }}
+                        {% for error in form.date.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.category.label }}</td>
+                    <td>{{ form.category() }}
+                        {% for error in form.category.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>{{ form.other_category.label }}</td>
+                    <td>{{ form.other_category() }}
+                        {% for error in form.other_category.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.difficulty.label }}</td>
+                    <td>{{ form.difficulty() }}
+                        {% for error in form.difficulty.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.capacity.label }}</td>
+                    <td>{{ form.capacity() }}
+                        {% for error in form.capacity.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.price.label }}</td>
+                    <td>{{ form.price() }}
+                        {% for error in form.price.errors %}
+                        <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{{ form.submit() }}</td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+    </section>
+
+{% endblock %}
+

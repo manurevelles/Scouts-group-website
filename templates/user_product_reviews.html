@@ -1,0 +1,156 @@
+{% extends "base_account.html" %}
+
+{% block main_content %}
+    <section id="reviews">
+        <h1>Product reviews</h1>
+        
+        {% if message %}
+            <p class="feedback">&#10004; {{ message }}</p>
+        {% endif %}
+        
+        <h2>Write a review</h2>
+
+        {% if product_choices[1] %}
+            <p>
+                You can write reviews for products you have bought.
+            </p>
+            <br />
+                <form action="" method="POST" novalidate>
+                    {{ form.hidden_tag() }}
+                    <table>
+                        <tr>
+                            <td>{{ form.bought_product.label }}</td>
+                            <td>{{ form.bought_product() }}</td>
+                            <td>                    
+                                {% for error in form.bought_product.errors %}
+                                    <span class="error">{{ error }}</span>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Rating: </td>
+                            <td>
+                                <ul id="rating">
+                                    <li>
+                                        <input id="rating-0" name="rating" type="radio" value="1"> 
+                                        <label for="rating-0">
+                                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon-empty.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon-empty.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon-empty.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon-empty.svg') }}" alt="">
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <input id="rating-1" name="rating" type="radio" value="2"> 
+                                        <label for="rating-1">
+                                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon-empty.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon-empty.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon-empty.svg') }}" alt="">
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <input id="rating-2" name="rating" type="radio" value="3"> 
+                                        <label for="rating-2">
+                                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon-empty.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon-empty.svg') }}" alt="">
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <input id="rating-3" name="rating" type="radio" value="4"> 
+                                        <label for="rating-3">
+                                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon-empty.svg') }}" alt="">
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <input id="rating-4" name="rating" type="radio" value="5"> 
+                                        <label for="rating-4">
+                                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                                        </label>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>                    
+                                {% for error in form.rating.errors %}
+                                    <span class="error">{{ error }}</span>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ form.title.label }}</td>
+                            <td>{{ form.title(maxlength=50, size=50) }}</td>
+                            <td>                    
+                                {% for error in form.title.errors %}
+                                    <span class="error">{{ error }}</span>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ form.review.label }}</td>
+                            <td>{{ form.review(placeholder="Enter your review (Max.: 300)", style="height:80px;width:650px;") }}</td>
+                            <td>                    
+                                {% for error in form.review.errors %}
+                                    <span class="error">{{ error }}</span>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>{{ form.submit() }}</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </form>
+        {% else %}
+            <p class="feedback">You don't have any products to review.</p>
+        {% endif %}
+
+
+        <h2>Written reviews</h2>
+
+        {% if not user_reviews %}
+            <p class="feedback">You haven't written any review yet.</p>
+        {% else %}
+            <p>You have written a total of <b>{{ total_reviews }} reviews</b>.</p>
+        {% endif %}
+
+        {% if user_reviews %}
+            {% for review in user_reviews %}
+
+                <section id="product_review">
+                    <h3>Product reviewed: <a href="{{ url_for('product', product_id = review['product_id']) }}">{{ review["name"] }}</a> </h3>
+                    <h3><span>
+                        {% for number in range( review["rating"] ) %}
+                            <img src="{{ url_for('static', filename='star-icon.svg') }}" alt="">
+                        {% endfor %}
+                        {% for number in range( 5-review["rating"] ) %}
+                            <img src="{{ url_for('static', filename='star-icon-empty.svg') }}" alt="">
+                        {% endfor %}
+                    </span> {{ review["review_title"]}}</h3>
+                    <p class="small_text">Reviewed on {{ review["date"].strftime('%d %B %Y') }}</p>
+                    <p class="review">{{ review["review"] }}</p>
+                    <p class="order-status"><a href="{{ url_for('delete_review', review_id=review['review_id']) }}"> Delete review</a></p>
+                </section>
+            
+            {% endfor %}
+
+
+        {% endif %}
+
+    </section>
+
+{% endblock %}
+

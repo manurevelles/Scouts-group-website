@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <title>Big Adventure - {{ title }}</title>
+        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    </head>
+
+    <body>
+    <header id="top">
+        <img src="{{ url_for ('static', filename='Scout_Logo.svg')}}" alt="" />
+        <a href="{{ url_for('index') }}"><h1>Big Adventure Scout Group Cork</h1></a>
+    </header>
+    <nav id="main-nav">
+        {% if g.user %}
+        <ul>
+            <li><a href="{{ url_for('index') }}">home</a></li>
+            <li><a href="{{ url_for('activities') }}">Activities</a></li>
+            <li><a href="{{ url_for('shop') }}">Shop</a></li>
+            {% if g.cart %}<li class="cart-nav"><a href="{{ url_for('cart') }}"><img src="{{ url_for('static', filename='cart_logo_inkscape.svg')}}" alt=""> {{ g.cart }} </a></li>{% endif %}
+            <li><a class="account-link" href="{{ url_for('account') }}"><img src="{{ url_for ('static', filename='sign-in_icon.svg')}}" alt=""> {{ g.user }} </a><a class="logout" href="{{ url_for('logout') }}"> [log out]</a></li>
+        </ul>
+        {% else %}
+        <ul>
+            <li><a href="{{ url_for('index') }}">home</a></li>
+            <li><a href="{{ url_for('activities') }}" class="current">Activities</a></li>
+            <li><a href="{{ url_for('shop') }}">Shop</a></li>
+            <li><a href="{{ url_for('login') }}">Log in <img src="{{ url_for ('static', filename='sign-in_icon.svg')}}" alt=""> </a></li>
+        </ul>
+        {% endif %}
+    </nav>
+
+    <main>
+        {% block main_content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <a href="{{ url_for('contact') }}">CONTACT US</a>
+        {% block footer_content %}
+        {% endblock %}
+        <p>
+            &copy; Big Adventure Scout Group Cork, 2023
+        </p>
+    </footer>
+
+    </body>
+
+</html>
