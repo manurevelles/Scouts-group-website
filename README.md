@@ -1,23 +1,29 @@
-# Scouts website
+# Scouts website (https://cs1.ucc.ie/~mrg1/cgi-bin/ca1/run.py/)
 
-Technologies: Python, Flask, HTML, CSS, SQLite
+Built as part of my backend project for Web Development II at University College Cork.
 
-FUNCTIONS:
+Obtained mark: 100%
 
-> REGULAR user:
+**Technologies**: _Python, Flask, HTML, CSS, SQLite_
+
+## FUNCTIONS:
+
+
+### _REGULAR_ user:
 
       - Create account, login/logout.
-      - Activity booking.
       - Shop search, order products and track orders.
+      - Activity booking.
+      - Write product reviews.
       - Contact forms.
 
-> SCOUT GROUP user:
+### _SCOUT GROUP_ user:
 
-      - All regular user functions + access to private area.
+      - Access to private area.
       - See upcoming scout events for this specific scout.
       - To become a scout group member, the admin (scout leader) provides the code to access this area.
       
-> ADMIN:
+### _ADMIN_:
 
       - Shop management (add/remove/edit shop products, review available discount codes)
       - Order management (see new orders, update order status)
