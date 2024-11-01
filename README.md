@@ -1,10 +1,10 @@
-# [Scouts website](https://cs1.ucc.ie/~mrg1/cgi-bin/ca1/run.py/)
+# [Scouts website](https://mrevelles.pythonanywhere.com/)
 
 Built as part of my backend project for Web Development II at University College Cork.
 
 Obtained mark: 100%
 
-**Technologies**: _Python, Flask, HTML, CSS, SQLite_
+**Technologies**: _Python, Flask, SQLite, HTML, CSS_
 
 ## FUNCTIONS:
 
